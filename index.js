@@ -7,7 +7,7 @@ var ul = document.createElement('ul');
 var input = document.getElementById('Input')
 var form = document.getElementById('Formulario');
 var isEditing = false;
-var Posiçao;
+var Posicao;
 
 function start() {
   PrevenirComportamentoDefault(form);
@@ -33,10 +33,10 @@ function CapturarValorDigitado(Objeto) {
 
       // se algum valor tiver sido digitado, entao posso editar ou inserir
       if (ValorDigitado) {
-        if (IsEditing) {
+        if (isEditing) {
           // Editando valores
-          globalNames.splice(Posição, 1, ValorDigitado);
-          IsEditing = false; //desativando modo edição
+          globalNames.splice(Posicao, 1, ValorDigitado);
+          isEditing = false; //desativando modo edição
         } else {
           //inserir valores
           globalNames.push(ValorDigitado); //insere o nome no array
@@ -92,8 +92,26 @@ var index = globalNames.indexOf(valor);
 input.value = globalNames[index];
 AplicarFoco(input);
 isEditing = true;
-Posiçao = index;
+Posicao = index;
 }
+//delete elements
+
+ul.addEventListener('click', function (event) {
+
+  //realizar evento so qnd usuario clicar no btn
+  if (event.target.localName === 'button') {
+    //captura valor do elemento clicaldo
+    var valor = event.srcElement.nextElementSibling.innerHTML;
+
+    //delete element from globalNames
+    var index = globalNames.indexOf(valor); //identifica o index
+    globalNames.splice(index, 1);
+
+    var ancestral = event.target.parentElement;
+    ancestral.remove();
+    ExibirVetor();
+  }
+});
 
 
 
