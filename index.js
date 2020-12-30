@@ -56,3 +56,44 @@ function ExibirVetor() {
   globalNames.forEach(PercorrerVetor);
   nomes.appendChild(ul); //add ul na div nomes p ser exibida
 }
+
+function PercorrerVetor(item) {
+  var li = document.createElement('li');
+
+  li.appendChild(CriarBotao()); // cria e add o btn X na li
+  li.appendChild(CriarSpan(item));
+  ul.appendChild(li);
+}
+
+function CriarBotao() {
+  var botao = document.createElement('button');
+
+  // add class delete button
+  botao.classList.add('DeleteButton');
+  botao.textContent = 'x';
+
+  return botao;
+}
+
+function CriarSpan(valor) {
+  var span = document.createElement('span');
+  span.textContent = valor;
+  span.classList.add('clicavel');
+  span.addEventListener('click', EditarItem);
+
+  return span;
+}
+
+function EditarItem(event) {
+// captura valor do elemento clicado
+var valor = event.target.innerHTML;
+
+var index = globalNames.indexOf(valor);
+input.value = globalNames[index];
+AplicarFoco(input);
+isEditing = true;
+Posiçao = index;
+}
+
+
+
